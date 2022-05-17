@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body>
+    <% for (var i = 0; i < projects.length; i++) { %>
+    <div>
+      <h3><%= projects[i].name %></h3>
+      <p>Owner: <%= projects[i].owner_id %></p>
+      <p>Project ID: <%= projects[i].id %></p>
+    </div>
+    <% } %>
+  </body>
+</html>
