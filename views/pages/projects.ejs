@@ -5,11 +5,39 @@
   </head>
   <body>
     <% for (var i = 0; i < projects.length; i++) { %>
-    <div>
+    <div data-owner="<%- projects[i].owner_id %>" class="project">
       <h3><%= projects[i].name %></h3>
       <p>Owner: <%= projects[i].owner_id %></p>
       <p>Project ID: <%= projects[i].id %></p>
     </div>
     <% } %>
+    <script>
+      let owners = '<%- owners %>';
+      window.addEventListener('DOMContentLoaded', async function (event) {
+        let res = await fetch(
+          `http://api.hackaday.io/v1/users/batch?ids=${owners}&api_key=fFndNxfzWpFivelu`,
+          { cache: 'default' }
+        );
+        let data = await res.json();
+        data.users.forEach((user) => {
+          if (sessionStorage.getItem(`user-${user.id}`)) {
+            let foundUser = sessionStorage.getItem(`user-${user.id}`);
+          } else {
+            sessionStorage.setItem(`user-${user.id}`, JSON.stringify(user));
+          }
+        });
+      });
+
+      let projects = document.getElementsByClassName('project');
+      for (let project of projects) {
+        const owner = JSON.parse(
+          sessionStorage.getItem(`user-${project.dataset.owner}`)
+        );
+        const node = document.createElement('span');
+        const textnode = document.createTextNode(owner.username);
+        node.appendChild(textnode);
+        project.appendChild(node);
+      }
+    </script>
   </body>
 </html>

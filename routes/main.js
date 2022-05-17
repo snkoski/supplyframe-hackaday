@@ -19,10 +19,12 @@ router.get('/projects/:page', async function (req, res, next) {
     }).then((res) => res.json());
 
     console.log('res', response);
+    let owners = response.projects.map((project) => project.owner_id);
 
     res.render('pages/projects', {
       current: response.page,
       pages: response.last_page,
+      owners: owners,
       projects: response.projects
     });
   } catch (err) {
