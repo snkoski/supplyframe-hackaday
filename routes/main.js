@@ -6,9 +6,9 @@ router.get('/', function (req, res) {
   res.render('pages/index');
 });
 
-router.get('/home/:page', async function (req, res, next) {
-  const perPage = 9;
-  const page = req.params.page || 1;
+router.get('/projects', async function (req, res, next) {
+  const perPage = req.query.per_page || 9;
+  const page = req.query.page || 1;
   const API_KEY = process.env.API_KEY;
   console.log('API_KEY', API_KEY);
   try {
