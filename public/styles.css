@@ -6,6 +6,10 @@ p:hover {
   color: pink;
 }
 
+.project-link {
+  display: inline-block;
+}
+
 .selector:hover .tooltip {
   display: block;
 }

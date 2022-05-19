@@ -4,9 +4,12 @@
     <%- include('../partials/head'); %>
   </head>
   <body>
+    <h1>Select a Project</h1>
     <% for (var i = 0; i < projects.length; i++) { %>
     <div data-owner="<%- projects[i].owner_id %>" class="project">
-      <a href="/projects/<%- projects[i].id %>""><h3><%= projects[i].name %></h3></a>
+      <a class="project-link" href="/projects/<%- projects[i].id %>"
+        ><h3><%= projects[i].name %></h3></a
+      >
       <p>Owner: <%= projects[i].owner_id %></p>
       <p>Project ID: <%= projects[i].id %></p>
     </div>
