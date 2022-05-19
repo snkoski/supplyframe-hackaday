@@ -1,3 +1,26 @@
 p {
   color: red;
 }
+
+p:hover {
+  color: pink;
+}
+
+.selector:hover .tooltip {
+  display: block;
+}
+
+.tooltip {
+  display: none;
+  background: #c8c8c8;
+  margin-left: 28px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1000;
+  width: 200px;
+  height: 100px;
+}
+
+.selector {
+  margin: 100px;
+}

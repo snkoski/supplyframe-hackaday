@@ -14,14 +14,16 @@
     <script>
       let owners = '<%- owners %>';
       window.addEventListener('DOMContentLoaded', async function (event) {
+        const API_KEY = process.env.API_KEY;
+        console.log('API_KEY2', API_KEY);
         let res = await fetch(
           `http://api.hackaday.io/v1/users/batch?ids=${owners}&api_key=fFndNxfzWpFivelu`,
-          { cache: 'default' }
+          { cache: 'no-cache' }
         );
         let data = await res.json();
         data.users.forEach((user) => {
           if (sessionStorage.getItem(`user-${user.id}`)) {
-            let foundUser = sessionStorage.getItem(`user-${user.id}`);
+            return;
           } else {
             sessionStorage.setItem(`user-${user.id}`, JSON.stringify(user));
           }
@@ -33,9 +35,19 @@
         const owner = JSON.parse(
           sessionStorage.getItem(`user-${project.dataset.owner}`)
         );
-        const node = document.createElement('span');
-        const textnode = document.createTextNode(owner.username);
-        node.appendChild(textnode);
+        const node = document.createElement('div');
+        node.classList.add('selector');
+        const textNode = document.createTextNode(owner.username);
+        node.appendChild(textNode);
+
+        const tooltip = document.createElement('span');
+        tooltip.classList.add('tooltip');
+        // const screenNameText = document.createTextNode(
+        //   `Screen Name: ${owner.screen_name} \nRank: ${owner.rank}`
+        // );
+        tooltip.innerHTML = `<p>Screen Name: ${owner.screen_name}</p><p>Rank: ${owner.rank}</p><p>About Me: ${owner.about_me}</p><p>Projects: ${owner.projects}</p><p>Followers: ${owner.followers}</p><p>Following: ${owner.following}</p><p>Skulls: ${owner.skulls}</p>`;
+        node.appendChild(tooltip);
+
         project.appendChild(node);
       }
     </script>

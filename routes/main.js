@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const fetch = require('node-fetch');
+require('dotenv').config();
 
 router.get('/', function (req, res) {
   res.render('pages/index');
@@ -8,7 +9,8 @@ router.get('/', function (req, res) {
 router.get('/projects/:page', async function (req, res, next) {
   const perPage = 9;
   const page = req.params.page || 1;
-
+  const API_KEY = process.env.API_KEY;
+  console.log('API_KEY', API_KEY);
   try {
     const uri = `http://api.hackaday.io/v1/projects?api_key=fFndNxfzWpFivelu&page=${page}&per_page=${perPage}`;
 
