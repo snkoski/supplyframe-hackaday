@@ -8,7 +8,37 @@
       <h3><%= project.name %></h3>
       <p>Owner: <%= project.owner_id %></p>
       <p>Summary: <%= project.summary %></p>
+      <p>Tags: <%= project.tags %></p>
+      <div>
+        <p>Recommended Projects:</p>
+        <ul id="recommended-projects"></ul>
+      </div>
     </div>
-    <script></script>
+    <script>
+      let tags = '<%- project.tags %>';
+      let projectName = '<%- project.name %>';
+      tags = tags.split(/,| /).join('+');
+      console.log('tags', tags);
+      window.addEventListener('DOMContentLoaded', async function (event) {
+        let res = await fetch(
+          `http://api.hackaday.io/v1/search/projects?api_key=fFndNxfzWpFivelu&search_term=${tags}`
+        );
+        let data = await res.json();
+        let projectsList = document.getElementById('recommended-projects');
+        for (const proj of data.projects) {
+          let project = await proj;
+          if (project.name === projectName) {
+            continue;
+          }
+          let link = document.createElement('a');
+          link.setAttribute('href', `/projects/${project.id}`);
+          link.textContent = project.name;
+
+          let listItem = document.createElement('li');
+          listItem.appendChild(link);
+          projectsList.appendChild(listItem);
+        }
+      });
+    </script>
   </body>
 </html>

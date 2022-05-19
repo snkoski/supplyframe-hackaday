@@ -10,9 +10,9 @@ router.get('/projects', async function (req, res, next) {
   const perPage = req.query.per_page || 9;
   const page = req.query.page || 1;
   const API_KEY = process.env.API_KEY;
-  console.log('API_KEY', API_KEY);
+
   try {
-    const uri = `http://api.hackaday.io/v1/projects?api_key=fFndNxfzWpFivelu&page=${page}&per_page=${perPage}`;
+    const uri = `http://api.hackaday.io/v1/projects?api_key=${API_KEY}&page=${page}&per_page=${perPage}`;
 
     const response = await fetch(uri, {
       method: 'GET',
@@ -37,17 +37,14 @@ router.get('/projects', async function (req, res, next) {
 router.get('/projects/:id', async function (req, res) {
   const id = req.params.id;
   const API_KEY = process.env.API_KEY;
-  console.log('API_KEY', API_KEY);
   try {
-    const uri = `http://api.hackaday.io/v1/projects/${id}?api_key=fFndNxfzWpFivelu`;
+    const uri = `http://api.hackaday.io/v1/projects/${id}?api_key=${API_KEY}`;
 
     const response = await fetch(uri, {
       method: 'GET',
       mode: 'cors',
       headers: { 'Content-Type': 'application/json' }
     }).then((res) => res.json());
-
-    console.log('res', response);
 
     res.render('pages/projects', {
       project: response
