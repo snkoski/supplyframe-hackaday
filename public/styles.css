@@ -1,9 +1,13 @@
 p {
-  color: red;
+  margin-bottom: 5px;
 }
 
-p:hover {
-  color: pink;
+.title {
+  text-align: center;
+}
+
+.label {
+  font-weight: bold;
 }
 
 .project-link {
@@ -16,15 +20,63 @@ p:hover {
 
 .tooltip {
   display: none;
-  background: #c8c8c8;
-  margin-left: 28px;
+  background: #f0ebeb;
   padding: 10px;
   position: absolute;
-  z-index: 1000;
-  width: 200px;
-  height: 100px;
+  z-index: 2;
+  width: 250px;
+  height: 250px;
+  overflow-y: scroll;
+  margin: auto;
+  margin-top: -290px;
+  overflow-wrap: break-word;
+  border: solid black 1px;
+  border-radius: 4px;
 }
 
 .selector {
-  margin: 100px;
+  margin: 5px;
+}
+
+.grid-container {
+  /* display: grid;
+  grid-template-columns: 1fr 1fr 1fr; */
+  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+}
+
+.project {
+  display: grid;
+  border: solid black 2px;
+  border-radius: 4px;
+}
+
+.card {
+  min-width: 300px;
+  flex: 1;
+  text-align: left;
+  padding: 10px;
+}
+
+.image-wrapper {
+  /* align-items: center */
+  overflow-y: hidden;
+  height: 400px;
+  display: flex;
+}
+
+.project-image {
+  width: 100%;
+  align-self: center;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.pagination {
+  list-style-type: none;
 }
