@@ -7,12 +7,15 @@ router.get('/', function (req, res) {
 });
 
 router.get('/projects', async function (req, res, next) {
-  const perPage = req.query.per_page || 9;
+  const perPage = req.query.per_page || 24;
   const page = req.query.page || 1;
   const API_KEY = process.env.API_KEY;
 
   try {
     const uri = `http://api.hackaday.io/v1/projects?api_key=${API_KEY}&page=${page}&per_page=${perPage}`;
+
+    // use test data instead of hitting api
+    // const response = require('../first24.json');
 
     const response = await fetch(uri, {
       method: 'GET',
@@ -22,7 +25,7 @@ router.get('/projects', async function (req, res, next) {
 
     let owners = response.projects.map((project) => project.owner_id);
 
-    res.render('pages/home', {
+    res.render('pages/main', {
       current: response.page,
       pages: response.last_page,
       owners: owners,
