@@ -6,7 +6,7 @@
   <body>
     <main>
       <h1>Select a Project</h1>
-      <div class="grid-container">
+      <div class="project-container">
         <% for (var i = 0; i < projects.length; i++) { %>
         <div data-owner="<%- projects[i].owner_id %>" class="project card">
           <a class="project-link title" href="/projects/<%- projects[i].id %>"

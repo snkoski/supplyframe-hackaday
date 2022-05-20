@@ -10,10 +10,6 @@ p {
   font-weight: bold;
 }
 
-.project-link {
-  display: inline-block;
-}
-
 .selector:hover .tooltip {
   display: block;
 }
@@ -38,19 +34,16 @@ p {
   margin: 5px;
 }
 
-.grid-container {
-  /* display: grid;
-  grid-template-columns: 1fr 1fr 1fr; */
+.project-container {
   gap: 10px;
   display: flex;
   flex-wrap: wrap;
   margin: auto;
 }
 
-.project {
-  display: grid;
-  border: solid black 2px;
-  border-radius: 4px;
+.flex-container {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .card {
@@ -60,8 +53,17 @@ p {
   padding: 10px;
 }
 
+.project {
+  display: grid;
+  border: solid black 2px;
+  border-radius: 4px;
+}
+
+.project-link {
+  display: inline-block;
+}
+
 .image-wrapper {
-  /* align-items: center */
   overflow-y: hidden;
   height: 400px;
   display: flex;
@@ -70,11 +72,6 @@ p {
 .project-image {
   width: 100%;
   align-self: center;
-}
-
-.flex-container {
-  display: flex;
-  justify-content: space-evenly;
 }
 
 .pagination {
