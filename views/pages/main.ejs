@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body>
+    <main>
+      <h1>Select a Project</h1>
+      <div class="grid-container">
+        <% for (var i = 0; i < projects.length; i++) { %>
+        <div data-owner="<%- projects[i].owner_id %>" class="project card">
+          <a class="project-link title" href="/projects/<%- projects[i].id %>"
+            ><h2><%= projects[i].name %></h2></a
+          >
+          <div class="image-wrapper">
+            <img
+              src="<%= projects[i].image_url %>"
+              alt=""
+              class="project-image"
+            />
+          </div>
+          <p class="label">Summary:</p>
+          <p><%= projects[i].summary %></p>
+          <p class="label">Project ID:</p>
+          <p><%= projects[i].id %></p>
+          <p class="label">Stats:</p>
+          <div class="flex-container">
+            <p>&#128064; <%= projects[i].views %></p>
+            <p>&#128694; <%= projects[i].followers %></p>
+            <p>&#128128; <%= projects[i].skulls %></p>
+          </div>
+          <p class="label created-by">Created By:</p>
+        </div>
+        <% } %>
+      </div>
+      <% if (pages > 0) { %>
+      <ul class="flex-container pagination">
+        <% if (current == 1) { %>
+        <li class="disabled"><a>First</a></li>
+        <% } else { %>
+        <li><a href="/projects?page=1">First</a></li>
+        <% } %> <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %> <%
+        if (i !== 1) { %>
+        <li class="disabled"><a>...</a></li>
+        <% } %> <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %> <%
+        if (i == current) { %>
+        <li class="active"><a><%= i %></a></li>
+        <% } else { %>
+        <li><a href="/projects?page=<%= i %>"><%= i %></a></li>
+        <% } %> <% if (i == Number(current) + 4 && i < pages) { %>
+        <li class="disabled"><a>...</a></li>
+        <% } %> <% } %> <% if (current == pages) { %>
+        <li class="disabled"><a>Last</a></li>
+        <% } else { %>
+        <li><a href="/projects?page=<%= pages %>">Last</a></li>
+        <% } %>
+      </ul>
+      <% } %>
+    </main>
+    <script>
+      let owners = '<%- owners %>';
+      window.addEventListener('DOMContentLoaded', async function (event) {
+        let res = await fetch(
+          `http://api.hackaday.io/v1/users/batch?ids=${owners}&api_key=fFndNxfzWpFivelu`,
+          { cache: 'no-cache' }
+        );
+        let data = await res.json();
+        data.users.forEach((user) => {
+          if (sessionStorage.getItem(`user-${user.id}`)) {
+            return;
+          } else {
+            sessionStorage.setItem(`user-${user.id}`, JSON.stringify(user));
+          }
+        });
+      });
+
+      let projects = document.getElementsByClassName('project');
+      for (let project of projects) {
+        const owner = JSON.parse(
+          sessionStorage.getItem(`user-${project.dataset.owner}`)
+        );
+        const node = document.createElement('div');
+        node.classList.add('selector');
+        const textNode = document.createTextNode(
+          owner.username || 'No username'
+        );
+        node.appendChild(textNode);
+
+        const tooltip = document.createElement('span');
+        tooltip.classList.add('tooltip');
+        tooltip.innerHTML = `<p  class="label">Screen Name:</p><p> ${owner.screen_name}</p><p  class="label">About Me:</p><p> ${owner.about_me}</p><p  class="label">Projects:</p><p> ${owner.projects}</p><p  class="label">Rank:</p><p> ${owner.rank}</p><p  class="label">Followers:</p><p> ${owner.followers}</p><p  class="label">Following:</p><p> ${owner.following}</p><p  class="label">Skulls:</p><p> ${owner.skulls}</p>`;
+        node.appendChild(tooltip);
+
+        project.appendChild(node);
+      }
+    </script>
+  </body>
+</html>
