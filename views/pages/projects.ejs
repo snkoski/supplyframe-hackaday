@@ -4,13 +4,17 @@
     <%- include('../partials/head'); %>
   </head>
   <body>
-    <div data-owner="<%- project.owner_id %>" class="project">
-      <h3><%= project.name %></h3>
-      <p>Owner: <%= project.owner_id %></p>
-      <p>Summary: <%= project.summary %></p>
-      <p>Tags: <%= project.tags %></p>
+    <div>
+      <h1><%= project.name %></h1>
+      <img src="<%= project.image_url %>" alt="" />
+      <p class="label">Summary:</p>
+      <p><%= project.summary %></p>
+      <p class="label">Description:</p>
+      <p><%= project.description %></p>
+      <p><strong>Tags: </strong><%= project.tags %></p>
+
       <div>
-        <p>Recommended Projects:</p>
+        <p class="label">Checkout These Recommended Projects:</p>
         <ul id="recommended-projects"></ul>
       </div>
     </div>
@@ -25,11 +29,14 @@
         );
         let data = await res.json();
         let projectsList = document.getElementById('recommended-projects');
-        for (const proj of data.projects) {
-          let project = await proj;
+        let count = 0;
+        for (let i = 0; count < 10; i++) {
+          let project = data.projects[i];
+          // Don't add itself to it's own Recommended Projects list
           if (project.name === projectName) {
             continue;
           }
+
           let link = document.createElement('a');
           link.setAttribute('href', `/projects/${project.id}`);
           link.textContent = project.name;
@@ -37,6 +44,7 @@
           let listItem = document.createElement('li');
           listItem.appendChild(link);
           projectsList.appendChild(listItem);
+          count++;
         }
       });
     </script>
